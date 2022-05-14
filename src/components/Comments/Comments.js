@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import CommentList from "./CommentList/CommentList";
 import styles from "./Comments.module.css";
 import CommentContext from "../../context/CommentContext";

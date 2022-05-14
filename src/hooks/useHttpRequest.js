@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 const useHttpRequest = (method, url, responseHandler) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   let response;
 
+  // payload are for POST methods.
   const sendRequest = async (payload = null) => {
     try {
       console.log("sending req  ");
-      setIsLoading(true);
-      // POST METHOD for InputCommentForm
+
+      // POST METHOD for InputCommentForm aka creating new Comments
       if (method === "POST") {
         response = await fetch(url, {
           method: "POST",
@@ -20,18 +20,18 @@ const useHttpRequest = (method, url, responseHandler) => {
         });
       }
 
+      //GET METHOD for InputCommentForm aka getting Comment List from API
       if (method === "GET") {
         response = await fetch(url);
       }
       if (!response.ok) throw new Error("Request Failed!");
       const json = await response.json();
       responseHandler(json);
-      setIsLoading(false);
     } catch (error) {
       setError(error.message);
     }
   };
-  return [isLoading, error, sendRequest];
+  return [error, sendRequest];
 };
 
 export default useHttpRequest;

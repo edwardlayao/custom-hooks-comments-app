@@ -5,12 +5,12 @@ import CommentContext from "../../../context/CommentContext";
 
 const InputCommentForm = () => {
   const commentCtx = useContext(CommentContext);
-  const [isLoading, error, sendRequest] = useHttpRequest(
+  const [error, sendRequest] = useHttpRequest(
     "POST",
     "https://test-react-starwars-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json",
     postResponseHandler
   );
-  const [isLoadingGet, errorGet, sendRequestGet] = useHttpRequest(
+  const [errorGet, sendRequestGet] = useHttpRequest(
     "GET",
     "https://test-react-starwars-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json",
     getResponseHandler

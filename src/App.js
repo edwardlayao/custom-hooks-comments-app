@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from "react";
+import "./App.css";
+import InputComment from "./components/InputComment/InputComment";
+import Comments from "./components/Comments/Comments";
+import CommentContext from "./context/CommentContext";
+import useHttpRequest from "./hooks/useHttpRequest";
 
 function App() {
+  const [isLoading, error, sendRequest] = useHttpRequest(
+    "GET",
+    "https://test-react-starwars-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json",
+    sendRequestHandler
+  );
+  const commentCtx = useContext(CommentContext);
+  useEffect(() => {
+    sendRequest();
+  }, []);
+
+  function sendRequestHandler(responseData) {
+    const commentList = Object.values(responseData);
+    commentCtx.updateComments(commentList);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main>
+        <InputComment></InputComment>
+        <Comments></Comments>
+      </main>
     </div>
   );
 }
